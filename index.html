@@ -9,7 +9,94 @@
 <body>
     
 <style>
+/* Floating Icon - Top Left */
+.side-icon-trigger {
+    position: fixed;
+    left: 25px;
+    top: 25px; /* Moved from 50% to top */
+    z-index: 5001;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.9); /* Slight transparency for luxury feel */
+    padding: 12px;
+    border: 1px solid #b5835a;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    transition: 0.3s ease;
+    border-radius: 2px;
+}
 
+.side-icon-trigger:hover {
+    background: #b5835a;
+}
+
+.line {
+    width: 22px;
+    height: 2px;
+    background: #1a1a1a;
+    transition: 0.3s;
+}
+
+.side-icon-trigger:hover .line {
+    background: #fff;
+}
+
+/* Clean Sidebar (No Shadow) */
+.sidebar-clean {
+    position: fixed;
+    top: 0;
+    left: -320px; 
+    width: 300px;
+    height: 100%;
+    background: #fff;
+    z-index: 5000;
+    transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    border-right: 1px solid #ddd;
+    padding: 80px 30px; /* More top padding to clear the icon area */
+}
+
+.sidebar-clean.open {
+    left: 0;
+}
+
+.sidebar-header h3 {
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 4px;
+    color: #1a1a1a;
+    font-size: 24px;
+    margin-bottom: 50px;
+}
+
+.side-links {
+    list-style: none;
+}
+
+.side-links li {
+    margin: 30px 0;
+}
+
+.side-links a {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.side-links a:hover {
+    color: #b5835a;
+}
+
+.close-btn {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #b5835a;
+}
 /* Google Fonts for a luxury feel */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap');
 
@@ -972,6 +1059,29 @@ input:focus, textarea:focus {
     </div>
 </nav>
 
+<div class="side-icon-trigger" onclick="toggleSidebar()">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+</div>
+
+<div id="side-menu" class="sidebar-clean">
+    <div class="sidebar-header">
+        <h3>AALAM</h3>
+        <span class="close-btn" onclick="toggleSidebar()">&times;</span>
+    </div>
+    <ul class="side-links">
+        <li><a href="#">New Arrivals</a></li>
+        <li><a href="#">Signature Scent ₹</a></li>
+        <li><a href="#">Men's Collection</a></li>
+        <li><a href="#">Women's Collection</a></li>
+        <li><a href="#">Contact Us</a></li>
+    </ul>
+    <div class="side-footer">
+        <p>Aalam Perfumes | Est. 2026</p>
+    </div>
+</div>
+    
 <!--Hero Section-->
 
 <section class="hero">
@@ -1161,6 +1271,23 @@ input:focus, textarea:focus {
 </div>
 
 <script>
+
+    function toggleSidebar() {
+    const sidebar = document.getElementById("side-menu");
+    const trigger = document.querySelector(".side-icon-trigger");
+    
+    sidebar.classList.toggle("open");
+    
+    // Smoothly hide the trigger when the sidebar is open so they don't overlap
+    if (sidebar.classList.contains("open")) {
+        trigger.style.opacity = "0";
+        trigger.style.pointerEvents = "none";
+    } else {
+        trigger.style.opacity = "1";
+        trigger.style.pointerEvents = "auto";
+    }
+}
+    
 window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
     
